@@ -25,9 +25,16 @@ public class Driver {
                 int numSides = input[1];
                 int numRolls = input[2];
 
+                Die[] dice = createDice(numDice, numSides);
+                int[] rolls = rollDice(dice, numSides, numRolls);
+                int max = findMax(rolls);
                 break;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
+            } catch (DieNotRolledException e) {
+            System.out.println("Die error: " + e.getMessage());
+            } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Error: Unexpected array index issue. Please try again.");
             }
         }
         scanner.close();
@@ -81,6 +88,33 @@ public class Driver {
 
         return dice;
     }
+
+    private static int[] rollDice(Die[] dice, int numSides, int numRolls){
+        int maxSum = dice.length * numSides;
+        int minSum = dice.length;
+        int[] results = new int[maxSum - minSum + 1];
+        for(int i = 0; i < numRolls; i++) {
+            int sum = 0;
+            for (Die die : dice) {
+                die.roll();
+                sum += die.getCurrentValue();
+            }
+            results[sum - minSum]++;
+        }
+        return results;
+    }
+
+
+    private static int findMax(int[] rolls){
+        int max = 0;
+        for (int count : rolls) {
+            if (count > max) {
+                max = count;
+            }
+        }
+        return max;
+    }
+
 
 
 }
