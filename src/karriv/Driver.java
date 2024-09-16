@@ -28,6 +28,7 @@ public class Driver {
                 Die[] dice = createDice(numDice, numSides);
                 int[] rolls = rollDice(dice, numSides, numRolls);
                 int max = findMax(rolls);
+                report(numDice, rolls, max);
                 break;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
@@ -115,6 +116,23 @@ public class Driver {
         return max;
     }
 
+    private static void report(int numDice, int[] rolls, int max) {
+        int scale = max / 10;
+
+        for (int i = 0; i < rolls.length; i++) {
+            int sum = i + numDice;
+
+            int numStars = rolls[i] / scale;
+
+            String stars = "*".repeat(numStars);
+
+            if (sum < 10) {
+                System.out.printf("%d :%5d %s%n", sum, rolls[i], stars);
+            } else {
+                System.out.printf("%d:%5d %s%n", sum, rolls[i], stars);
+            }
+        }
+    }
 
 
 }
