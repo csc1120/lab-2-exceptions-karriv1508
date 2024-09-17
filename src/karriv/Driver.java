@@ -17,8 +17,10 @@ public class Driver {
 
     public static void main(String[] args) {
 
+        Boolean start = true;
+
         Scanner scanner = new Scanner(System.in);
-        while (true) {
+        while (start) {
             try {
                 int[] input = getInput();
                 int numDice = input[0];
@@ -29,7 +31,7 @@ public class Driver {
                 int[] rolls = rollDice(dice, numSides, numRolls);
                 int max = findMax(rolls);
                 report(numDice, rolls, max);
-                break;
+                start = false;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             } catch (DieNotRolledException e) {
